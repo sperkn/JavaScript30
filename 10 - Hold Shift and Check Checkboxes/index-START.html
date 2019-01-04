@@ -103,6 +103,24 @@
     checkBox.addEventListener('click', addChecks);
   });
 
+  function addChecks(e) {
+    let inBetween = false;
+    // check if user had the shift key down AND check that input is being checked (not unchecked)
+    if (e.shiftKey && this.checked) {
+      // do what we please
+      checkBoxes.forEach(checkBox => {
+        if (checkBox === this || checkBox === lastChecked) {
+          inBetween = !inBetween;
+        }
+        if (inBetween) {
+          checkBox.checked = true;
+        }
+      });
+    }
+
+    lastChecked = this;
+  };
+
 </script>
 </body>
 </html>
