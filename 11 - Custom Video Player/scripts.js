@@ -1,9 +1,9 @@
-const video = document.querySelector('.player__video');
-const playButton = document.querySelector('.player__button');
-const volumeSlider = document.querySelector('.player__controls input[name=volume]');
-const speedSlider = document.querySelector('.player__controls input[name=playbackRate]');
-const progress = document.querySelector('.player__controls .progress');
-const progressFilled = document.querySelector('.player__controls .progress__filled');
+const player = document.querySelector('.player');
+const video = player.querySelector('.player__video');
+const playButton = player.querySelector('.player__button');
+const sliders = player.querySelectorAll('.player__slider');
+const progress = player.querySelector('.player__controls .progress');
+const progressFilled = player.querySelector('.player__controls .progress__filled');
 
 function togglePlay() {
   if(video.paused) {
@@ -13,13 +13,15 @@ function togglePlay() {
   }
 };
 
-function adjustVolume() {
-  video.volume = this.value;
-};
-
-function adjustSpeed() {
-  video.playbackRate = this.value;
-};
+function adjustSlider() {
+  const inputName = this.name;
+  
+  if (inputName === 'volume') {
+    video.volume = this.value;
+  } else {
+    video.playbackRate = this.value;
+  }
+}
 
 function adjustProgress(e) {
   let width = (e.layerX/640)*100;
@@ -29,5 +31,4 @@ function adjustProgress(e) {
 
 progress.addEventListener('click', adjustProgress);
 playButton.addEventListener('click', togglePlay);
-volumeSlider.addEventListener('change', adjustVolume);
-speedSlider.addEventListener('change', adjustSpeed);
+sliders.forEach(slider => slider.addEventListener('change', adjustSlider));
