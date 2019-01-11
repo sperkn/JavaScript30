@@ -23,12 +23,15 @@
       <input type="text" name="item" placeholder="Item Name" required>
       <input type="submit" value="+ Add Item">
     </form>
+    <button class="delete">Delete All</button>
+    <button class="check">Check All</button>
   </div>
 
 <script>
   const addItems = document.querySelector('.add-items');
   const itemsList = document.querySelector('.plates');
   const items = JSON.parse(localStorage.getItem('items')) || [];
+  const deleteButton = document.querySelector('.delete');
 
   function addToList(e) {
     e.preventDefault();
@@ -52,20 +55,27 @@
         <label for="item${i}">${plate.text}</label>
         </li>
         `;
-      }).join('');
-    }
+    }).join('');
+  }
     
-    function toggleDone(e) {
-      if (!e.target.matches('input')) return;
-      const input = e.target;
-      const index = input.dataset.index;
-      items[index].done = !items[index].done;
-      localStorage.setItem('items', JSON.stringify(items));
-      populateList(items, itemsList);   
+  function toggleDone(e) {
+    if (!e.target.matches('input')) return;
+    const input = e.target;
+    const index = input.dataset.index;
+    items[index].done = !items[index].done;
+    localStorage.setItem('items', JSON.stringify(items));
+    populateList(items, itemsList);   
+  }
+
+  function deleteAll() {
+    itemsList.innerHTML = '';
+    items.length = 0;
+    localStorage.clear();
   }
 
   addItems.addEventListener('submit', addToList);
   itemsList.addEventListener('click', toggleDone);
+  deleteButton.addEventListener('click', deleteAll);
 
   populateList(items, itemsList);
   
