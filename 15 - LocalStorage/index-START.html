@@ -32,6 +32,7 @@
   const itemsList = document.querySelector('.plates');
   const items = JSON.parse(localStorage.getItem('items')) || [];
   const deleteButton = document.querySelector('.delete');
+  const toggleCheckButton = document.querySelector('.check');
 
   function addToList(e) {
     e.preventDefault();
@@ -73,9 +74,18 @@
     localStorage.clear();
   }
 
+  function toggleChecks() {
+    items.forEach(item => {
+      item.done = !item.done;  
+    })
+    localStorage.setItem('items', JSON.stringify(items));
+    populateList(items, itemsList);
+  }
+
   addItems.addEventListener('submit', addToList);
   itemsList.addEventListener('click', toggleDone);
   deleteButton.addEventListener('click', deleteAll);
+  toggleCheckButton.addEventListener('click', toggleChecks);
 
   populateList(items, itemsList);
   
