@@ -27,6 +27,26 @@
 
   <script>
     // 👀👀👀👀👀👀👀👀👀👀👀👀👀👀👀
+    const links = document.querySelectorAll('a');
+    const background = document.createElement('span');
+    background.classList.add('highlight');
+    document.body.append(background);
+
+    function addBackground() {
+      const linkCoords = this.getBoundingClientRect();
+      background.style.opacity = '1';
+      background.style.width = `${linkCoords.width}px`;
+      background.style.height = `${linkCoords.height}px`;
+      background.style.transform = `translate(${linkCoords.left + window.scrollX}px, ${linkCoords.top + window.scrollY}px)`;
+    }
+
+    function removeBackground() {
+      background.style.opacity = '0';
+    }
+
+    links.forEach(link => link.addEventListener('mouseenter', addBackground));
+    links.forEach(link => link.addEventListener('mouseleave', removeBackground));
+
   </script>
 </body>
 </html>
