@@ -54,7 +54,27 @@
   </div>
 
 <script>
+  const nav = document.querySelector('#main');
+  const logo = document.querySelector('.logo');
+  const text = document.querySelector('.site-wrap');
+  const navTop = nav.offsetTop;
 
+  function freezeNav(e) {
+    const pageTop = window.scrollY;
+    console.log(navTop, pageTop);
+    
+    if (navTop <= pageTop) {
+      nav.style.position = 'sticky';
+      logo.style.maxWidth = '150px';
+      text.style.transform = 'scale(1)';
+    } else {
+      nav.style.position = 'relative';
+      logo.style.maxWidth = '0';
+      text.style.transform = 'scale(0.98)';
+    }
+  }
+
+  window.addEventListener('scroll', freezeNav);
 </script>
 
 </body>
